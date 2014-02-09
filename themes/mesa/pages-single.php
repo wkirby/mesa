@@ -1,13 +1,11 @@
 <?php include('header.php'); ?>
 	
 	<div class="container">
-		<?php if ($query->is_single) : ?>
-			<div class="alert alert-info alert-dismissable">
-			  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-				<p>Just a heads up, this page is single.</p>
-			</div>
-		<?php endif; ?>
-
+		<div class="alert alert-info alert-dismissable">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			<p>I AM <?php echo pathinfo($mesa->template, PATHINFO_BASENAME); ?></p>
+		</div>
+		
 		<?php if (count($query->pages) > 0) : ?>
 			<?php foreach ($query->pages as $post) : ?>
 				<?php $post->setup(); ?>

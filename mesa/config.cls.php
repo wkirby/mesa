@@ -3,11 +3,6 @@
 // Security Check
 if (!defined('MESA')) { die( 'wallhax' ); }
 
-/**
- * Mesa Config
- * 
- * @author  Wyatt <wyatt@apsis.io>
- */
 class MesaConfig {
 	
 	/**

@@ -45,6 +45,7 @@ class MesaQuery {
         }
 
         if ( !empty($this->query['id']) ) {
+            $this->id = $this->query['id'];
             $this->is_single = true;
         }
     }
@@ -56,26 +57,32 @@ class MesaQuery {
      */
     public function getQuery() {
         $path = trailingslash(CONTENTDIR . $this->type);
-        $handle = opendir($path);
 
-        while ( false !== ($currentFile = readdir($handle)) ) { 
+        if(!is_dir($path)) {
+            $this->is_404 = true;
+            return;
+        }
 
-            $isExemptFile = in_array( strtolower($currentFile), $this->exemptFilesArray );
-            $isValidFileType = in_array( pathinfo($currentFile, PATHINFO_EXTENSION), $this->validFileTypes );
+        if ( $handle = opendir($path) ) {
+            while ( false !== ($currentFile = readdir($handle)) ) { 
 
-            if ( !$isExemptFile && $isValidFileType ) {
-                
-                // Retrieve All Files, unless Specific ID Query is set
-                // then retrieve single page, with id matching the PATHINFO
+                $isExemptFile = in_array( strtolower($currentFile), $this->exemptFilesArray );
+                $isValidFileType = in_array( pathinfo($currentFile, PATHINFO_EXTENSION), $this->validFileTypes );
 
-                if ( !$this->is_single ) {
-                    $this->pages[] = new MesaPage($path . $currentFile);
-                    continue;
-                } else if ( $this->query['id'] === pathinfo($currentFile, PATHINFO_FILENAME) ) {
-                    $this->pages[] = new MesaPage($path . $currentFile);
-                    break;
-                }
-            } 
+                if ( !$isExemptFile && $isValidFileType ) {
+                    
+                    // Retrieve All Files, unless Specific ID Query is set
+                    // then retrieve single page, with id matching the PATHINFO
+
+                    if ( !$this->is_single ) {
+                        $this->pages[] = new MesaPage($path . $currentFile);
+                        continue;
+                    } else if ( $this->query['id'] === pathinfo($currentFile, PATHINFO_FILENAME) ) {
+                        $this->pages[] = new MesaPage($path . $currentFile);
+                        break;
+                    }
+                } 
+            }
         }
 
         closedir($handle);
