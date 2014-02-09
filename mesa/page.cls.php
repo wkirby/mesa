@@ -44,6 +44,8 @@ class MesaPage {
 		$this->parsePageMeta();
 		$this->setupPageData();
 		$this->formatPageContent();
+		$this->formatPageExcerpt();
+		$this->formatPageDate();
 		$this->createPermalink();
 	}
 
@@ -89,6 +91,39 @@ class MesaPage {
 	 */
 	public function formatPageContent() {
 		$this->content = Parsedown::instance()->parse($this->pageContent);
+	}
+
+	/**
+	 * Create an Excerpt
+	 *
+	 * TODO: This uses magic numbers; we need to move these into the config
+	 * file for the site, and then figure out how to access them inside
+	 * classes.
+	 */
+	public function formatPageExcerpt() {
+		if ( !$this->excerpt ) {
+			$excerpt = strip_tags($this->content);
+			$excerptWords = explode(' ', $excerpt);
+			$this->excerpt = implode(' ', array_slice($excerptWords, 0, 80)) . '&hellip;';
+		}
+	}
+
+	/**
+	 * Guess Date from File Name
+	 *
+	 * Try to guess the date from the filename by filtering out anything
+	 * but numbers, and truncating that to the maximum date length. This
+	 * is remarkably bad at actually working, but it's a start.
+	 *
+	 * TODO: We need a setting as to whether or not users want this kind
+	 * of guesswork to be done.
+	 */
+	public function formatPageDate() {
+		if ( !$this->date ) {
+			$dateString = filter_var($this->id, FILTER_SANITIZE_NUMBER_INT);
+			$dateString = substr($dateString, 0, 8);
+			$this->date = date('Y-m-d', strtotime($dateString));
+		}
 	}
 
 	/**
