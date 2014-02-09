@@ -1,12 +1,7 @@
 <?php include('header.php'); ?>
 	
 	<div class="container">
-		<div class="alert alert-info alert-dismissable">
-			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-			<p>I AM <?php echo pathinfo($mesa->template, PATHINFO_BASENAME); ?></p>
-		</div>
-		
-		<?php if (count($query->pages) > 0) : ?>
+		<?php if ($query->hasPages()) : ?>
 			<?php foreach ($query->pages as $post) : ?>
 				<?php $post->setup(); ?>
 				<h1><a href="<?php echo $post->permalink; ?>"><?php echo $post->title; ?></a></h1>

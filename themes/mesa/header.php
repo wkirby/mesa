@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title><?php echo $conf->get('sitename'); ?></title>
+	<title><?php echo $config->get('sitename'); ?></title>
 
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
@@ -33,3 +33,10 @@
 			</div>
 		</div>
 	</nav>
+
+	<div class="container">
+		<div class="alert alert-warning alert-dismissable">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			<?php echo $mesa->template; ?>
+		</div>
+	</div>
