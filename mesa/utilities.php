@@ -1,5 +1,11 @@
 <?php
 
+function _e($string, $format = "%s") {
+	if (!empty($string)) {
+		printf($format, $string);
+	}
+}
+
 function trailingslash($string) {
 	return untrailingslash($string) . '/';
 }
