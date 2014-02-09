@@ -11,13 +11,14 @@ class Mesa {
 	public function __construct() {
 		$this->config = new MesaConfig( trailingslash(ROOT) . 'mesa.json' );
 		$this->query = new MesaQuery( array('id' => get_query('id'), 'type' => get_query('type')));
-		$this->template = MesaTemplate::getTemplate($this->config->get('theme'), $this->query->id, $this->query->type);
+		$this->template = MesaTemplate::getTemplate($this->query, $this->config->get('theme'));
 	}
 
 	public function load() {
 		$mesa = $this;
-		$query= $this->query;
-		$conf = $this->config;
+		$query = $this->query;
+		$config = $this->config;
+
 		include($this->template);
 	}
 }
