@@ -9,7 +9,7 @@ class MesaQuery {
 
     public $type;
     public $id;
-    public $is_single = false;
+    public $isSingle = false;
 
     private $exemptFilesArray = array('.', '..', '.ds_store', '.thumbs', '.svn', '.git');
     private $validFileTypes = array('md', 'txt');
@@ -46,7 +46,7 @@ class MesaQuery {
 
         if ( !empty($this->query['id']) ) {
             $this->id = $this->query['id'];
-            $this->is_single = true;
+            $this->isSingle = true;
         }
     }
 
@@ -74,7 +74,7 @@ class MesaQuery {
                     // Retrieve All Files, unless Specific ID Query is set
                     // then retrieve single page, with id matching the PATHINFO
 
-                    if ( !$this->is_single ) {
+                    if ( !$this->isSingle ) {
                         $this->pages[] = new MesaPage($path . $currentFile);
                         continue;
                     } else if ( $this->query['id'] === pathinfo($currentFile, PATHINFO_FILENAME) ) {
@@ -86,6 +86,10 @@ class MesaQuery {
         }
 
         closedir($handle);
+    }
+
+    public function hasPages() {
+        return ($this->pages > 0);
     }
 
     public function filterQuery($key, $value) {
