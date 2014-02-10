@@ -5,20 +5,23 @@ if (!defined('MESA')) { die( 'wallhax' ); }
 
 class Mesa {
 
-	public $config;
 	public $query;
+	public $template;
 
 	public function __construct() {
-		$this->config   = new MesaConfig( trailingslash(ROOT) . 'mesa.json' );
-		$this->query    = new MesaQuery( array('id' => get_query('id'), 'type' => get_query('type')));
-		$this->template = new MesaTemplate($this->query, $this->config->get('theme'));
+		$requestArray = array(
+			'id' => getQuery('id'),
+			'type' => getQuery('type')
+		);
+		$this->query    = new MesaQuery( $requestArray );
+		$this->template = new MesaTemplate( $this->query );
 	}
 
 	public function load() {
 		$mesa = $this;
 		$query = $this->query;
-		$config = $this->config;
+		$config = conf::get();
 		
-		include($this->template->templateFile);
+		include( $this->template->templateFile );
 	}
 }

@@ -56,7 +56,7 @@ class MesaQuery {
      * Retrieve files based on query.
      */
     public function getQuery() {
-        $path = trailingslash(CONTENTDIR . $this->type);
+        $path = slash(CONTENTDIR . $this->type);
 
         if(!is_dir($path)) {
             $this->is_404 = true;

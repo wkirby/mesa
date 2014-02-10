@@ -9,10 +9,10 @@ class MesaTemplate {
 	public $themePath;
 	public $templateFile;
 
-	public function __construct($query, $theme) {
+	public function __construct($query) {
 		$this->query = $query;
-		$this->themePath = THEMESDIR . trailingslash($theme);
-
+		$this->themePath = THEMESDIR . slash(conf::get('theme'));
+		
 		$this->getTemplate();
 	}
 
