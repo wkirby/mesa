@@ -5,27 +5,41 @@ if (!defined('MESA')) { die( 'wallhax' ); }
 
 class MesaTemplate {
 
-	public function getTemplate($query, $theme) {
-		if (!$theme) { die('no theme defined'); }
+	public $query;
+	public $themePath;
+	public $templateFile;
 
-		if     ( !empty($query->id) && !empty($query->type) && $query->isSingle && $template = self::getTemplateFile("{$query->type}-single.php", $theme)) :
-		elseif ( !empty($query->type) && !$query->isSingle && $template = self::getTemplateFile("{$query->type}.php", $theme)) :
-		elseif ( !empty($query->id) && $query->isSingle && $template = self::getTemplateFile("single.php", $theme)) :
-		else :
-			$template = self::getTemplateFile("index.php", $theme);
-		endif;
+	public function __construct($query, $theme) {
+		$this->query = $query;
+		$this->themePath = THEMESDIR . trailingslash($theme);
 
-		return $template;
+		$this->getTemplate();
 	}
 
-	public function getTemplateFile($file, $theme) {
-		$template = THEMESDIR . trailingslash($theme) . $file;
+	public function getTemplate() {
+
+		if     ( !empty($this->query->id) && !empty($this->query->type) && $this->query->isSingle && $template = self::getTemplateFile("{$this->query->type}-single.php")) :
+		elseif ( !empty($this->query->type) && !$this->query->isSingle && $template = self::getTemplateFile("{$this->query->type}.php")) :
+		elseif ( !empty($this->query->id) && $this->query->isSingle && $template = self::getTemplateFile("single.php")) :
+		else :
+			$template = $this->getTemplateFile("index.php");
+		endif;
+
+		$this->templateFile = $template;
+	}
+
+	public function getTemplateFile($file) {
+		$template = $this->themePath . $file;
 
 		if ( file_exists($template) ) {
 			return $template;
 		}
 
 		return false;
+	}
+
+	public function __toString() {
+		return $this->templateFile;
 	}
 
 }
