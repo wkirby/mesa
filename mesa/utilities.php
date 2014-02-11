@@ -43,3 +43,7 @@ function cleanArray($haystack) {
 function cleanPath($path) {
 	return preg_replace('#/+#','/',$path);
 }
+
+function createSalt() {
+	return md5(uniqid(rand(1,6)));
+}

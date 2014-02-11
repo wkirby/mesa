@@ -1,0 +1,17 @@
+{
+	"users": [{
+		"firstName": "Wyatt",
+		"lastName": "Kirby",
+		"email": "wyatt@apsis.io",
+		"roles": ["admin", "editor", "author"],
+		"hashword": ,
+		"salt": 
+	}, {
+		"firstName": "Noah",
+		"lastName": "Callaway",
+		"email": "noah@apsis.io",
+		"roles": ["admin", "editor", "author"],
+		"hashword": ,
+		"salt": 
+	}]
+}
