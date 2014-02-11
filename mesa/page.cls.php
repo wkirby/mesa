@@ -130,6 +130,8 @@ class MesaPage {
 	 * Build Permalink for Post
 	 */
 	public function createPermalink() {
-		$this->permalink = SITEURL . '?id=' . $this->id . '&' . 'type=' . $this->type;
+		$queryArray = array( 'id' => $this->id, 'type' => $this->type );
+		$queryParams = http_build_query($queryArray);
+		$this->permalink = conf::get('siteurl') . '?' . $queryParams;
 	}
 }
