@@ -42,19 +42,23 @@ class Mesa {
 			} elseif ( file_exists($path . 'index.txt') ) {
 				$page = $path . 'index.txt' ;
 			} else {
-				$page = "404";
+				$this->is404 = true;
 			}
 		} elseif ( file_exists(unslash($path) . '.txt' ) ) {
 			$page = unslash($path) . '.txt';
 		} else {
-			$page = "404";
+			$this->is404 = true;
 		}
 
 		$this->page = new page($page);
 	}
 
 	public function getTemplate() {
-		$this->template = slash(conf::get('themesPath')) . slash(conf::get('theme')) . 'index.php';
+		if ( $this->is404 ) {
+			$this->template = slash(conf::get('themesPath')) . slash(conf::get('theme')) . '404.php';
+		} else {
+			$this->template = slash(conf::get('themesPath')) . slash(conf::get('theme')) . 'index.php';
+		}
 	}
 
 	public function getChildren() {
