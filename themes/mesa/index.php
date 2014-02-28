@@ -1,13 +1,9 @@
 <?php include('header.php'); ?>
 	
 	<div class="container">
-		<?php if ($query->hasPages()) : ?>
-			<?php foreach ($query->pages as $post) : ?>
-				<?php $post->setup(); ?>
-				<h1><a href="<?php echo $post->permalink; ?>"><?php echo $post->title; ?></a></h1>
-				<?php echo $post->content; ?>
-				<hr/>
-			<?php endforeach; ?>
+		<?php if ($page) : ?>
+			<?php _e($page->title, '<h1>%s</h1>'); ?>
+			<?php echo $page->content; ?>
 		<?php else : ?>
 			Sorry bro.
 		<?php endif; ?>

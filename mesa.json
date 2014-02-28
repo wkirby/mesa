@@ -2,5 +2,11 @@
     "sitename": "Mesa",
     "theme": "Mesa",
     "sitedesc": "Mesa: Flat File CMS",
-    "urlscheme": "http:\/\/"
+
+    "timezone": "America/Los_Angeles",
+    
+    "contentDir": "content",
+    "mediaDir": "media",
+    "pluginsDir": "plugins",
+    "themesDir": "themes"
 }

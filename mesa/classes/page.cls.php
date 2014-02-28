@@ -3,7 +3,7 @@
 // Security Check
 if (!defined('MESA')) { die( 'wallhax' ); }
 
-class MesaPage {
+class page {
 
 	public $content;
 	public $excerpt;
@@ -24,12 +24,9 @@ class MesaPage {
 	 * @param string $file Path to file contents.
 	 */
 	public function __construct($file = '') {
-		$this->id = pathinfo($file, PATHINFO_FILENAME);
-		$this->type = basename(pathinfo($file, PATHINFO_DIRNAME));
-		
-		if (file_exists($file)) {
-			$this->plainText = file_get_contents($file);
-		}
+		$this->path = $file;
+		$this->plainText = file::read($file);
+		$this->setup();
 	}
 
 	/**
@@ -60,19 +57,17 @@ class MesaPage {
 	 * can appear at beginning or end of file.
 	 */
 	public function parsePageMeta() {
-		$pieces = array_map('trim', explode("---", $this->plainText));
+		// Is there a JSON block?
+		if ( '{' === substr($this->plainText, 0, 1) && strpos($this->plainText, "}") ) {
+			$json = substr($this->plainText, 0, strpos($this->plainText, "}") + 1);
+			$text = substr($this->plainText, strpos($this->plainText, "}") + 1);
 
-		// Do we need to check for JSON?
-		if ( count($pieces) < 2 ) {
-			$this->pageContent = $pieces[0];
-		} else if ('{' === substr($pieces[0], 0, 1) && '}' === substr($pieces[0], -1, 1) ) {
-			// JSON exists, set it as the page meta
-			$this->pageMeta = json_decode($pieces[0], true);
-			$this->pageContent = $pieces[1];
+			$this->pageMeta = json_decode($json, true);
 		} else {
-			// Fail safely and just use the plaintext as page content
-			$this->pageContent = $this->plainText;
+			$text = $this->plaintext;
 		}
+
+		$this->pageContent = $text;
 	}
 
 	/**
@@ -130,8 +125,6 @@ class MesaPage {
 	 * Build Permalink for Post
 	 */
 	public function createPermalink() {
-		$queryArray = array( 'id' => $this->id, 'type' => $this->type );
-		$queryParams = http_build_query($queryArray);
 		$this->permalink = conf::get('siteurl') . '?' . $queryParams;
 	}
 }

@@ -3,15 +3,15 @@
 // Security Check
 if (!defined('MESA')) { die( 'wallhax' ); }
 
-class MesaConfig {
+class json {
 	
 	public $config = array();
-	public $configFile;
+	public $jsonFile;
 
 	public function __construct($file = '') {
 		if (!empty($file)) {
-			$this->configFile = $file;
-			$this->loadFile($this->configFile);
+			$this->jsonFile = $file;
+			$this->loadFile($this->jsonFile);
 		}
 
 	}
@@ -39,19 +39,19 @@ class MesaConfig {
 		return $this->config;
 	}
 
-	public function saveConfigFile($backup = false) {
-		if ( isset($this->configFile) && !empty($this->configFile) ) {
+	public function saveFile($backup = false) {
+		if ( isset($this->jsonFile) && !empty($this->jsonFile) ) {
 			if ( true === $backup ) {
 				$backupTime = date("Ymd", time());
-				$backupPath = slash(pathinfo($this->configFile, PATHINFO_DIRNAME));
-				$backupName = pathinfo($this->configFile, PATHINFO_BASENAME);
+				$backupPath = slash(pathinfo($this->jsonFile, PATHINFO_DIRNAME));
+				$backupName = pathinfo($this->jsonFile, PATHINFO_BASENAME);
 
-				if ( !copy($this->configFile, $backupPath . $backupTime . $backupName ) ) {
+				if ( !copy($this->jsonFile, $backupPath . $backupTime . $backupName ) ) {
 					return false;
 				}
 			}
 
-			file_put_contents($this->configFile, json_encode($this->config, JSON_PRETTY_PRINT));
+			file_put_contents($this->jsonFile, json_encode($this->config, JSON_PRETTY_PRINT));
 		}
 
 		return false;

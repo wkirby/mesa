@@ -1,9 +1,28 @@
 <?php
 
-function _e($string, $format = "%s") {
+// Security Check
+if (!defined('MESA')) { die( 'wallhax' ); }
+
+function conditionalEcho($string, $format = "%s") {
 	if (!empty($string)) {
 		printf($format, $string);
 	}
+}
+
+// Alias conditionalEcho
+function _e($string, $format = "%s") {
+	conditionalEcho($string, $format);
+}
+
+function prettyArray($array) {
+	if ($array) {
+		echo '<pre>' . print_r($array, true) . '</pre>';
+	}
+}
+
+// Alias prettyArray
+function _a($array) {
+	prettyArray($array);
 }
 
 function slash($string) {
@@ -38,6 +57,16 @@ function cleanArray($haystack) {
 	}
 
 	return $haystack;
+}
+
+function searchArray($needle, $haystack) {
+	foreach ($haystack as $key => $value) {
+		if ( $needle === $value || ( is_array($value) && searchArray($needle, $value) !== false )) {
+			return $haystack[$key];
+		}
+	}
+
+	return false;
 }
 
 function cleanPath($path) {
