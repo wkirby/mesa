@@ -13,6 +13,7 @@ include('classes/conf.cls.php');
 include('classes/file.cls.php');
 include('classes/json.cls.php');
 include('classes/mesa.cls.php');
+include('classes/record.cls.php');
 include('classes/user.cls.php');
 include('classes/uri.cls.php');
 include('classes/page.cls.php');

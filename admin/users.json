@@ -1,17 +1,12 @@
 {
-	"users": [{
-		"firstName": "Wyatt",
-		"lastName": "Kirby",
-		"email": "wyatt@apsis.io",
-		"roles": ["admin", "editor", "author"],
-		"hashword": ,
-		"salt": 
-	}, {
-		"firstName": "Noah",
-		"lastName": "Callaway",
-		"email": "noah@apsis.io",
-		"roles": ["admin", "editor", "author"],
-		"hashword": ,
-		"salt": 
-	}]
+    "users": [
+        {
+            "email": "noah@apsis.io",
+            "hashword": "$2y$10$6XfmIOHplQjDZKRGjHvW6u3khVe1zhjRgRXIEuRXhQE6pyJPXSVMi"
+        },
+        {
+            "email": "wyatt@apsis.io",
+            "hashword": "$2y$10$vCnMpb28qXs32XitxRrTJuNPlCNVcY0tc0K0XYhpKHE.w65.PR4UW"
+        }
+    ]
 }
